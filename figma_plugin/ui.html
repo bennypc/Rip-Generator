@@ -1,0 +1,41 @@
+<h2>Rip SVG Line</h2>
+<button id="rip">Rip Selected Line</button>
+<button id="cancel">Cancel</button>
+
+<div id="status" style="margin-top: 20px"></div>
+
+<label for="jaggedness">Jaggedness:</label>
+<input style="margin-top: 10px" type="number" id="jaggedness" value="40" />
+
+<script>
+  document.getElementById('rip').onclick = () => {
+    const jaggedness =
+      parseInt(document.getElementById('jaggedness').value, 10) || 40;
+    parent.postMessage(
+      { pluginMessage: { type: 'create-rip', jaggedness: jaggedness } },
+      '*'
+    );
+  };
+
+  document.getElementById('cancel').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*');
+  };
+
+  window.onmessage = (event) => {
+    const { type, message } = event.data.pluginMessage;
+    const statusDiv = document.getElementById('status');
+    if (type === 'success') {
+      statusDiv.style.color = 'green';
+    } else if (type === 'error') {
+      statusDiv.style.color = 'red';
+    }
+    statusDiv.textContent = message;
+  };
+
+  window.onerror = (message, source, lineno, colno, error) => {
+    parent.postMessage(
+      { pluginMessage: { type: 'error', message: `UI Error: ${message}` } },
+      '*'
+    );
+  };
+</script>

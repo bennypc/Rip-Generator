@@ -1,0 +1,15 @@
+{
+  "name": "Rip Generator",
+  "id": "1274763684065025770",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": ["figma"],
+  "ui": "ui.html",
+  "networkAccess": {
+    "allowedDomains": ["*"],
+    "reasoning": "Temporarily allowing all domains during development. This will be restricted before production.",
+    "devAllowedDomains": ["http://localhost:5000"]
+  }
+}

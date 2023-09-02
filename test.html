@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch Test</title>
+  </head>
+  <body>
+    <button id="testButton">Test Fetch</button>
+    <div id="result"></div>
+
+    <script>
+      document
+        .getElementById('testButton')
+        .addEventListener('click', async () => {
+          try {
+            const response = await fetch('http://127.0.0.1:5000/process-svg', {
+              method: 'POST',
+              body: JSON.stringify({
+                svg_data:
+                  '<svg width="904" height="1159" viewBox="0 0 904 1159" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M743.5 5.5L898.5 32V1074L807.5 1020.5L703.5 1151.5L607.5 1074L431 1020.5L348 1111.5L164 1020.5L6 860.5L43.5 622.5L6 465L113 312.5L43.5 219L57 88L249.5 48L399 88L508.5 157.5L743.5 5.5Z" stroke="white" stroke-width="10"/></svg>'
+              }), // Sample SVG data for testing
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+
+            const data = await response.json();
+            document.getElementById('result').innerText = JSON.stringify(
+              data,
+              null,
+              2
+            );
+          } catch (error) {
+            document.getElementById(
+              'result'
+            ).innerText = `Error: ${error.message}`;
+          }
+        });
+    </script>
+  </body>
+</html>
